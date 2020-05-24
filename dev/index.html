@@ -5,16 +5,25 @@
     <meta charset="utf-8">
     <title>&lt;my-element> Demo</title>
     <script type="module" src="../my-element.js"></script>
+    <script type="module" src="../my-other-element.js"></script>
     <style>
       p {
         border: solid 1px blue;
         padding: 8px;
       }
+
+      my-element {
+        margin: 0.5rem 0;
+      }
     </style>
   </head>
   <body>
     <my-element>
-      <p>This is child content</p>
+      <p slot="one">Child 1</p>
+      <p>Child 2</p>
+      <p>Child 3</p>
     </my-element>
+
+    <my-element compose="true"></my-element>
   </body>
 </html>

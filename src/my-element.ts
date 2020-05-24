@@ -13,6 +13,7 @@
  */
 
 import {LitElement, html, customElement, property, css} from 'lit-element';
+import './my-other-element.js';
 
 /**
  * An example element.
@@ -29,12 +30,19 @@ export class MyElement extends LitElement {
       padding: 16px;
       max-width: 800px;
     }
-  `;
+  ::slotted(*) { color: red; }
+  div {
+    margin-left: 1rem;
+  }
+  div ::slotted(*) {
+    color: blue;
+  }
+`;
 
   /**
    * The name to say "Hello" to.
    */
-  @property()
+  @property({type: String})
   name = 'World';
 
   /**
@@ -43,18 +51,39 @@ export class MyElement extends LitElement {
   @property({type: Number})
   count = 0;
 
+  @property({type: Boolean})
+  compose = null;
+
   render() {
+    if (this.compose) {
+      return html`
+        ${this.counterTemplate}
+        <my-other-element>Hello</my-other-element>
+        <my-other-element>Hello</my-other-element>
+        <my-other-element>Hello</my-other-element>
+      `;
+    } else {
+      return html`
+        ${this.counterTemplate}
+        <slot name="one"></slot>
+        <div>
+          <slot></slot>
+        </div>
+      `;
+    }
+  }
+
+  private _onClick() {
+    this.count++;
+  }
+
+  get counterTemplate() {
     return html`
       <h1>Hello, ${this.name}!</h1>
       <button @click=${this._onClick} part="button">
         Click Count: ${this.count}
       </button>
-      <slot></slot>
     `;
-  }
-
-  private _onClick() {
-    this.count++;
   }
 
   foo(): string {
