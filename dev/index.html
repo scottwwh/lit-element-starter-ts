@@ -7,11 +7,6 @@
     <script type="module" src="../my-element.js"></script>
     <script type="module" src="../my-other-element.js"></script>
     <style>
-      p {
-        border: solid 1px blue;
-        padding: 8px;
-      }
-
       my-element {
         margin: 0.5rem 0;
       }
@@ -19,9 +14,9 @@
   </head>
   <body>
     <my-element>
-      <p slot="one">Child 1</p>
-      <p>Child 2</p>
-      <p>Child 3</p>
+      <my-other-element slot="one">Billy</my-other-element>
+      <my-other-element>Bob</my-other-element>
+      <my-other-element>Bojack</my-other-element>
     </my-element>
 
     <my-element compose="true"></my-element>
