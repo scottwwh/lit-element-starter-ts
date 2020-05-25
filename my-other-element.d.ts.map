@@ -1,1 +1,0 @@
-{"version":3,"file":"my-other-element.d.ts","sourceRoot":"","sources":["src/my-other-element.ts"],"names":[],"mappings":"AAAA;;;;;;;;;;;;GAYG;AAEH,OAAO,EAAC,UAAU,EAAqC,MAAM,aAAa,CAAC;AAE3E;;;;;GAKG;AACH,qBACa,cAAe,SAAQ,UAAU;IAC5C,MAAM,CAAC,MAAM,kCAOb;IAEA;;OAEG;IAEH,IAAI,SAAW;IAEf,MAAM;CAKP;AAED,OAAO,CAAC,MAAM,CAAC;IACb,UAAU,qBAAqB;QAC7B,kBAAkB,EAAE,cAAc,CAAC;KACpC;CACF"}

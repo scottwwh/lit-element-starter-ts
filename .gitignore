@@ -8,5 +8,7 @@ my-element.js.map
 my-element.d.ts
 my-element.d.ts.map
 
-my-other-element.*
-my-other-element.*.*
+my-other-element.js
+my-other-element.js.map
+my-other-element.d.ts
+my-other-element.d.ts.map
