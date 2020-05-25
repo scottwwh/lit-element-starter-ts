@@ -81,58 +81,59 @@ export class MyElement extends LitElement {
     return el;
   }
 
+  // Called after connected/render
   firstUpdated(changedProperties :any) {
     console.log('firstUpdated:', changedProperties);
 
+    const slots = this.shadowRoot?.querySelectorAll('slot');
+    slots?.forEach(slot => {
+      // console.log('slot:', slot.name);
 
-    // Not entirely sure what this is for?
-    // console.log('firstElementChild:', this.shadowRoot?.firstElementChild);
-    if (this.shadowRoot && this.shadowRoot.firstElementChild) {
-      // console.log('add slotchange listener');
-      this.shadowRoot.firstElementChild.addEventListener('slotchange', e => {
-        let slot = e.target;
-        console.log('slotchange:', slot);
-        // if (slot) {
-          // if (slot.name == 'item') {
-          //   this.items = slot.assignedElements().map(elem => elem.textContent);
-          //   alert("Items: " + this.items);
-          // }
-        // }
-      });  
-    }
-
+      slot.addEventListener('slotchange', e => {
+        console.log(this.id, 'slotchange:', e.target);
+      });
+    });
+    
 
     // DYNAMICALLY ADD CHILDREN
     //
     // TODO: Await dynamic content, then append nodes to slots
+    // https://lit-element.polymer-project.org/guide/styles#style-the-components-children
     if (this.compose) {
 
-      // This works, but does not inherit ::slotted styling
-      const slots = this.shadowRoot?.querySelectorAll('slot');
-      slots?.forEach(slot => {
-        // console.log('slot:', slot.name);
-        if (slot.name == 'one') {
-          slot.innerHTML = '<my-other-element>Shalacka</my-other-element>';
-        } else {
-          slot.innerHTML = `
-            <my-other-element>Shabazz</my-other-element>
-            <my-other-element>Shazam</my-other-element>
-          `;
-        }
-      });
-      
+      // This works, but children do not inherit ::slotted styling
+      const debug = false;
+      if (debug) {
+        const slots = this.shadowRoot?.querySelectorAll('slot');
+        slots?.forEach(slot => {
+          console.log('slot:', slot.name);
+
+          // This works to append children, but they don't inherit ::slotted styling
+          if (slot.name == 'one') {
+            slot.innerHTML = '<my-other-element>Shalacka</my-other-element>';
+          } else {
+            slot.innerHTML = `
+              <my-other-element>Shabazz</my-other-element>
+              <my-other-element>Shazam</my-other-element>
+            `;
+          }
+        });
+      }
+
       // This works as expected, because we're appending directly to the LightDOM
-      const elements = ['Foo', 'Bar', 'Baz'];
+      const elements = ['Foo', 'Bar', 'Baz', 'Bim'];
       this.count = elements.length;
       elements.forEach((el, i) => {
         const label = i === 0 ? 'one' : '' ;
         this.appendChild(this.createChildren(el, label));
       });
+
+      console.log('Added child components dynamically..');
     }
   }
 
   render() {
-    // console.log('render');
+    console.log('render');
 
     // Use a single template, whether children are static or dynmic
     return html`
