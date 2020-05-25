@@ -30,12 +30,18 @@ export class MyElement extends LitElement {
       padding: 16px;
       max-width: 800px;
     }
-    ::slotted(*) { color: red; }
+
+    ::slotted(*) {
+      /* color: red; */
+      background: #eee;
+    }
+
     div {
       margin-left: 1rem;
     }
     div ::slotted(*) {
-      color: blue;
+      /* color: blue; */
+      background: #ddd;
     }
   `;
 
