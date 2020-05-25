@@ -17,6 +17,7 @@
   */
 
 import {LitElement, html, customElement, property, css} from 'lit-element';
+// import {until} from 'lit-html/directives/until.js';
 
 /**
  * An example element.
@@ -49,26 +50,41 @@ export class MyOtherElement extends LitElement {
       // mode: 'no-cors' // 'cors' by default
     });
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
     const arr :string[] = [];
     Object.keys(data).forEach(k => {
       arr.push(`${k} : ${data[k]}`);
     })
-
     return arr;
+  }
+
+  async getMetadata() {
+    const id :number = parseInt(String(Math.random() * 100));
+    const arr :string[] = await this.getData(id);
+    return arr;
+  }
+
+  async getMetadataAsTemplate() {
+    const id :number = parseInt(String(Math.random() * 100));
+    const arr :string[] = await this.getData(id);
+
+    return html`
+      <ul>
+        ${arr.map((i :string) => html`<li>${i}</li>`)}
+      </ul>`;
   }
 
   // Called after connected/render
   firstUpdated(changedProperties :any) {
     console.log('firstUpdated:', changedProperties);
 
-    const id :number = parseInt(String(Math.random() * 100));
-    const data = this.getData(id);
+    // OPTION 1
+    const data = this.getMetadata();
     data.then(data => {
       this.metadata = data;
     });
-    // console.log(this.metadata);
+    console.log(this.metadata);
 
     console.log('Added content..');
   }
@@ -78,6 +94,13 @@ export class MyOtherElement extends LitElement {
       <slot></slot>
       ${this.metadataTemplate}
     `;
+
+    // OPTION 2
+    // const data = this.getMetadataAsTemplate();
+    // return html`
+    //   <slot></slot>
+    //   ${until(data, html`<p>Loading...</p>`)}
+    // `;
   }
 
   get metadataTemplate() {
